@@ -9,7 +9,7 @@ namespace CityInfo.API.Services
 {
     public class LocalMailService : ILocalMailService
     {
-        private string From = "admin@acid.com";
+        private string From = Startup.Configuration["mailSettings:mailFromAddress"];
 
         public void Send(string mailTo, string subject, string message)
         {
