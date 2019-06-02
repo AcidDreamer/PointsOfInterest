@@ -1,5 +1,7 @@
 ﻿using CityInfo.API.DataStores;
+using CityInfo.API.Interfaces;
 using CityInfo.API.Models;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,11 +16,12 @@ namespace CityInfo.API.Controller
     public class PointsOfInterestController : ControllerBase
     {
         private readonly ILogger<PointsOfInterestController> _logger;
+        private readonly ILocalMailService _mail;
 
-        public PointsOfInterestController(ILogger<PointsOfInterestController> logger)
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, ILocalMailService mail)
         {
             _logger = logger;
-
+            _mail = mail;
         }
         [HttpGet("{cityId:int}/pointsofinterest")]
         public IActionResult PointsOfInterest(int cityID)
@@ -31,6 +34,7 @@ namespace CityInfo.API.Controller
                 return NotFound();
             }
 
+            _mail.Send("Recepient@katiallo.com","Information asked", "Mpla mpla mpla");
             return Ok(city.PointsOfInterest);
         }
 
